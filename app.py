@@ -11,7 +11,7 @@ app.config.update(
 
 @app.route('/')
 def index_function(): 
-    return render_template('index.html')
+    return render_template('login.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='localhost', port=3000, threaded=True)
