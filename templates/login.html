@@ -20,6 +20,10 @@
             </div>
             <button type="submit" class="login-btn">Login</button>
         </form>
+        
+        <!-- Signup link below the login button -->
+        <p class="signup-link">Don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a></p>
+        
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <div class="flash-messages">

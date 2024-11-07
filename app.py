@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, session
 from flask_cors import CORS
 import json
 
-from util import login_fn, make_payment_fn
+from util import login_fn, make_payment_fn, signup_fn
 
 
 name = 'Budget Buddy'
@@ -41,6 +41,10 @@ def payment_screen():
 @app.route('/make-payment', methods=['GET', 'POST'])
 def make_payment():
     return make_payment_fn()
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    return signup_fn()
 
 if __name__ == '__main__':
     app.run(debug=True, host='localhost', port=3000, threaded=True)

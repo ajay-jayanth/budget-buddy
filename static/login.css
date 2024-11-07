@@ -78,3 +78,17 @@ body, html {
 .signup-link:hover {
     text-decoration: underline;
 }
+
+/* login.css */
+.signup-link {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.9em;
+}
+.signup-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+.signup-link a:hover {
+    text-decoration: underline;
+}
