@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='taskbar.css') }}">
+    <script src="{{ url_for('static', filename='eventListeners.js') }}"></script>
+    <title>Homepage</title>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Budget Buddy</h2>
+        <h1>Hello {{ username }}</h1>
+        <h1>Bank: {{ bank_name }}</h1>
+        <h3>Account Number: {{ account_number }}</h3>
+        <h1>Total Debt: {{ debt_amount }}</h1>
+    </div>
+    <div class="taskbar">
+        <div class="button-holder">
+            <button class="taskbar-button" id="payment-button">
+                <img src="{{ url_for('static', filename='icons/payment_icon.png') }}">
+            </button>
+            <button class="taskbar-button selected" id="home-button">
+                <img src="{{ url_for('static', filename='icons/home_icon.png') }}">
+            </button>
+            <button class="taskbar-button" id="calendar-button">
+                <img src="{{ url_for('static', filename='icons/calendar_icon.png') }}">
+            </button>
+        </div>
+    </div>
+</body>
+</html>

@@ -9,7 +9,7 @@
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form action="{{ url_for('index_function') }}" method="POST">
+        <form action="{{ url_for('login') }}" method="POST">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>
@@ -20,6 +20,13 @@
             </div>
             <button type="submit" class="login-btn">Login</button>
         </form>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    <div class="flash-message">{{ messages[-1] }}</div>
+                </div>
+            {% endif %}
+        {% endwith %}
     </div>
 </body>
 </html>

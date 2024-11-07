@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='taskbar.css') }}">
+    <script src="{{ url_for('static', filename='eventListeners.js') }}"></script>
+    <title>Make Payment</title>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Budget Buddy</h2>
+        <h1>Debt: {{ debt_amount_str }}</h1>
+        <form action="{{ url_for('make_payment') }}" method="POST">
+            <div class="form-group">
+                <label for="payment_amount">Payment Amount</label>
+                <input type="number" id="payment_amount" name="payment_amount" min="0.0" max="{{ debt_amount }}" value="0.0" required>
+            </div>
+            <button type="submit" class="login-btn">Make Payment</button>
+        </form>
+    </div>
+    <div class="taskbar">
+        <div class="button-holder">
+            <button class="taskbar-button" id="payment-button">
+                <img src="{{ url_for('static', filename='icons/payment_icon.png') }}">
+            </button>
+            <button class="taskbar-button selected" id="home-button">
+                <img src="{{ url_for('static', filename='icons/home_icon.png') }}">
+            </button>
+            <button class="taskbar-button" id="calendar-button">
+                <img src="{{ url_for('static', filename='icons/calendar_icon.png') }}">
+            </button>
+        </div>
+    </div>
+</body>
+</html>
