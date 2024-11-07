@@ -1,1 +1,2 @@
+pandas
 flask_cors==5.0.0
