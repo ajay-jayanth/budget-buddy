@@ -67,3 +67,8 @@ body, html {
     width: 3em;   /* Maintain aspect ratio */
 }
 
+#debtChart {
+    max-width: 99%;
+    max-height: 99%;
+    margin: 0 auto;
+}
