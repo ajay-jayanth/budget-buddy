@@ -23,12 +23,18 @@ def login():
 
 @app.route('/homepage', methods=['GET', 'POST'])
 def homepage():
-    return render_template('homepage.html',
-                           username=session.get('username'),
-                           bank_name=session.get('bank_name'),
-                           account_number=session.get('account_number'),
-                           debt_amount=f'${session.get("debt_amount"):,.2f}'
+    debt_amount = session.get("debt_amount", 0)
+    formatted_debt_amount = f'${debt_amount:,.2f}'  # This is for display purposes only
+    return render_template(
+        'homepage.html',
+        username=session.get('username'),
+        bank_name=session.get('bank_name'),
+        account_number=session.get('account_number'),
+        debt_amount=debt_amount,  # Raw number for JavaScript
+        formatted_debt_amount=formatted_debt_amount  # Formatted string for display
     )
+
+
 
 @app.route('/payment-screen', methods=['GET'])
 def payment_screen():
