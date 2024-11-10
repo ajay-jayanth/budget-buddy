@@ -1,6 +1,8 @@
 from flask import request, redirect, url_for, flash, render_template, session
 import pandas as pd
 import os
+import datetime
+from typing import Tuple
 
 USER_DATA_PATH = 'static/user_data.csv'
 BANK_DATA_PATH = 'static/bank_data.csv'
@@ -98,3 +100,16 @@ def make_payment_fn():
                            debt_amount=session.get('debt_amount'),
                            debt_amount_str=f'${session.get("debt_amount"):,.2f}'
         )
+    
+def check_schedule_config(goal_date: datetime.date, yearly_income: int, payment_intervals: int) -> Tuple[bool, str]:
+    days_for_repayment = (goal_date - datetime.datetime.now()).days
+    if days_for_repayment <= 0:
+        return False, 'Date'
+    if session.get('debt_amount') > yearly_income / 365 * days_for_repayment:
+        return False, 'Amount'
+    return True, 'Valid'
+
+def compute_payment_amount(goal_date: datetime.date, payment_intervals: int) -> float:
+    days_for_repayment = (goal_date - datetime.datetime.now()).days
+    payment_per_day = session.get('debt_amount') / days_for_repayment
+    return payment_per_day * payment_intervals
