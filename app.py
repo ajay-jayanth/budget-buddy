@@ -80,10 +80,10 @@ def schedule_payments():
     if not config_valid:
         if err_str == 'Date':
             flash('The date is invalid.')
-            return redirect(url_for('schedule-payments-screen'))
+            return redirect(url_for('schedule_payments_screen'))
         elif err_str == 'Amount':
             flash('The amount cannot be paid before the goal date.')
-            return redirect(url_for('schedule-payments-screen'))
+            return redirect(url_for('schedule_payments_screen'))
     
     session['payment_amount'] = compute_payment_amount(goal_date, payment_intervals)
     payment_date = datetime.datetime.now() + datetime.timedelta(days=payment_intervals)
