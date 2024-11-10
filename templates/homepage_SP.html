@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='homepage.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='taskbar.css') }}">
+    <script src="{{ url_for('static', filename='eventListeners.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Homepage</title>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Hello {{ username }}</h1>
+        <div class="bank-header">
+            {% if bank_name == "Wells Fargo" %}
+                <img src="{{ url_for('static', filename='icons/wells-fargo.png') }}" class="bank-icon" alt="Wells Fargo Icon">
+            {% elif bank_name == "Chase" %}
+                <img src="{{ url_for('static', filename='icons/chase.png') }}" class="bank-icon" alt="Chase Icon">
+            {% elif bank_name == "Bank of America" %}
+                <img src="{{ url_for('static', filename='icons/bofa.png') }}" class="bank-icon" alt="Bank of America Icon">
+            {% else %}
+                <img src="{{ url_for('static', filename='icons/default_icon.png') }}" class="bank-icon" alt="Default Icon">
+            {% endif %}
+            <h1>Bank: {{ bank_name }}</h1>
+        </div>
+
+        <h3>Account Number: {{ account_number }}</h3>
+        <h2>Total Debt: {{ formatted_debt_amount }}</h2>
+
+        <canvas id="debtChart" width="250" height="250"></canvas>
+        <h3>Next Payment: {{ payment_date }}</h3>
+        <h3>Payment Amount: {{ payment_amount }}</h3>
+    </div>
+
+    <div class="taskbar">
+        <div class="button-holder">
+            <button class="taskbar-button" id="payment-button">
+                <img src="{{ url_for('static', filename='icons/payment_icon.png') }}">
+            </button>
+            <button class="taskbar-button selected" id="home-button">
+                <img src="{{ url_for('static', filename='icons/home_icon.png') }}">
+            </button>
+            <button class="taskbar-button" id="calendar-button">
+                <img src="{{ url_for('static', filename='icons/calendar_icon.png') }}">
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const totalDebt = {{ debt_amount | default(10000) }};
+
+        if (isNaN(totalDebt)) {
+            console.error("Error: totalDebt is not a valid number.");
+            alert("Error: totalDebt is not a valid number.");
+        }
+
+        const rentDebt = totalDebt * 0.40;
+        const medicalDebt = totalDebt * 0.30;
+        const groceriesDebt = totalDebt * 0.20;
+        const insuranceDebt = totalDebt * 0.10;
+
+        const ctx = document.getElementById('debtChart').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Rent', 'Medical Bills', 'Groceries', 'Insurance'],
+                datasets: [{
+                    data: [rentDebt, medicalDebt, groceriesDebt, insuranceDebt],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return `${tooltipItem.label}: $${tooltipItem.raw.toFixed(2)}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
