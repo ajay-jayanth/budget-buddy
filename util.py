@@ -56,7 +56,7 @@ def signup_fn():
             user_df = new_user_df
 
         user_df.to_csv(USER_DATA_PATH, index=False)
-        
+        session.clear()
         # Redirect to login page after successful signup
         flash("Account created successfully! Please log in.")
         return redirect(url_for('login'))
