@@ -45,3 +45,9 @@
     display: flex;
     object-fit: cover;
 }
+
+.flash-message {
+    display: flex;
+    margin-top: 5%;
+    justify-self: center;
+}

@@ -53,42 +53,22 @@ body, html {
     outline: none;
 }
 
-.login-btn {
-    width: 100%;
-    padding: 0.75rem;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
+
+.bank-header {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;    /* Vertically align the icon and text */
+    gap: 10px;              /* Space between icon and header text */
+    text-align: center;     /* Center text inside the header */
 }
 
-.login-btn:hover {
-    background-color: #0056b3;
+.bank-icon {
+    height: 3em; /* Adjust height to match text size */
+    width: 3em;   /* Maintain aspect ratio */
 }
 
-.signup-link {
-    margin-top: 1rem;
-    display: block;
-    color: #007bff;
-    text-decoration: none;
-}
-
-.signup-link:hover {
-    text-decoration: underline;
-}
-
-/* login.css */
-.signup-link {
-    margin-top: 10px;
-    text-align: center;
-    font-size: 0.9em;
-}
-.signup-link a {
-    color: #007bff;
-    text-decoration: none;
-}
-.signup-link a:hover {
-    text-decoration: underline;
+#debtChart {
+    max-width: 99%;
+    max-height: 99%;
+    margin: 0 auto;
 }

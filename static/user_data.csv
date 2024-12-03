@@ -3,3 +3,6 @@ ajay,pass1,Chase,XXXX0000,52420.5
 shalom,pass2,Chase,XXXX0002,60000.0
 neil,pass3,Chase,XXXX0004,72340.0
 shalin,pass4,Chase,XXXX0006,61200.0
+test_user,testpass,Chase,XXXX0006,61200.0
+testuser,testpass,Chase,XXXX0006,58200.0
+testuser1,testpass,Chase,XXXX0006,58200.0
