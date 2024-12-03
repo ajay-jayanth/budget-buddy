@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='signup.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
     <title>Sign Up</title>
 </head>
 <body>
@@ -28,6 +29,16 @@
             </div>
             <button type="submit" class="signup-btn">Sign Up</button>
         </form>
+        
+        <p class="signup-link"><a href="{{ url_for('login') }}">Already have an account? Sign up here</a></p>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    <div class="flash-message">{{ messages[-1] }}</div>
+                </div>
+            {% endif %}
+        {% endwith %}
     </div>
 </body>
 </html>

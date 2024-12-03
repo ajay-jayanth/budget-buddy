@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='homepage.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='taskbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bank_auth.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <title>Security Question</title>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Create Security Question</h1>
+        <form action="{{ url_for('security_question') }}" method="POST">
+            <div class="form-group">
+                <label for="security_question">Choose the question.</label>
+                <select id="security_question" name="security_question" required>
+                    {% for question in questions %}
+                        <option value="v">{{ question }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="sq_answer">Answer:</label>
+                <input type="text" id="sq_answer" name="sq_answer" required>
+            </div>
+            <button type="submit" class="login-btn">Submit</button>
+        </form>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    <div class="flash-message">{{ messages[-1] }}</div>
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>
