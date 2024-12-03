@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-from flask_cors import CORS
 import json
 import datetime
 
@@ -8,7 +7,6 @@ from util import login_fn, make_payment_fn, signup_fn, check_schedule_config, co
 
 name = 'Budget Buddy'
 app = Flask(name) 
-CORS(app)
 
 app.config.update( 
     SECRET_KEY='dev'
