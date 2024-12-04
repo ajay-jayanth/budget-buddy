@@ -26,7 +26,15 @@
         
         {% with messages = get_flashed_messages() %}
             {% if messages %}
-                <div class="error-message">{{ messages[-1] }}</div>
+                {% if messages[-1] == "Account created successfully! Please log in." %}
+                    <div class="flash-messages">
+                        <div class="flash-message.green">{{ messages[-1] }}</div>
+                    </div>
+                {% else %}
+                    <div class="flash-messages">
+                        <div class="flash-message">{{ messages[-1] }}</div>
+                    </div>
+                {% endif %}
             {% endif %}
         {% endwith %}
     </div>

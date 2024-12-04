@@ -95,14 +95,23 @@ body, html {
 
 /* Error Message Styling */
 .error-message {
-    color: red;
-    background-color: #ffe6e6;
     padding: 10px;
-    border: 1px solid red;
     border-radius: 5px;
     margin-top: 10px;
     text-align: center;
     font-size: 0.9em;
+}
+
+.error-message:not(.green) {
+    color: red;
+    background-color: #ffe6e6;
+    border: 1px solid red;
+}
+
+.flash-message.green {
+    color: green;
+    background-color: #e6ffe6;
+    border: 1px solid green;
 }
 
 .signup-link {
