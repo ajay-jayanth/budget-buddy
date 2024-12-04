@@ -72,3 +72,14 @@ body, html {
     max-height: 99%;
     margin: 0 auto;
 }
+
+.flash-message {
+    color: green;
+    background-color: #e6ffe6;
+    padding: 10px;
+    border: 1px solid green;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.9em;
+}

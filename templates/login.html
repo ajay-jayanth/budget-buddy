@@ -26,9 +26,7 @@
         
         {% with messages = get_flashed_messages() %}
             {% if messages %}
-                <div class="flash-messages">
-                    <div class="flash-message">{{ messages[-1] }}</div>
-                </div>
+                <div class="error-message">{{ messages[-1] }}</div>
             {% endif %}
         {% endwith %}
     </div>

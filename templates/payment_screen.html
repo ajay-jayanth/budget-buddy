@@ -19,6 +19,12 @@
             </div>
             <button type="submit" class="login-btn">Make Payment</button>
         </form>
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="error-message">{{ messages[-1] }}</div>
+            {% endif %}
+        {% endwith %}
     </div>
     <div class="taskbar">
         <div class="button-holder">

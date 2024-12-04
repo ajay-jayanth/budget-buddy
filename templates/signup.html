@@ -28,6 +28,12 @@
             </div>
             <button type="submit" class="signup-btn">Sign Up</button>
         </form>
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="error-message">{{ messages[-1] }}</div>
+            {% endif %}
+        {% endwith %}
     </div>
 </body>
 </html>

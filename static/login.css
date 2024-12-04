@@ -92,3 +92,34 @@ body, html {
 .signup-link a:hover {
     text-decoration: underline;
 }
+
+/* Error Message Styling */
+.error-message {
+    color: red;
+    background-color: #ffe6e6;
+    padding: 10px;
+    border: 1px solid red;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.signup-link {
+    display: inline-block; 
+    padding: 10px; 
+    text-align: center;
+    font-size: 0.9em;
+    width: 100%; 
+}
+
+.signup-link a {
+    color: #007bff;
+    text-decoration: none;
+    display: block; 
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
