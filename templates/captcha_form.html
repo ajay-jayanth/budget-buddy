@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='homepage.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='taskbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bank_auth.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <title>Captcha Form</title>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Bank Authorization</h1>
+        <form action="{{ url_for('captcha_form') }}" method="POST">
+            <img src="{{ url_for('static', filename='icons/captcha.png')}} " style="margin-bottom: 5%;">
+            <div class="form-group">
+                <label for="captcha_answer">Type the text above</label>
+                <input type="text" id="captcha_answer" name="captcha_answer" required>
+            </div>
+            <button type="submit" class="login-btn">Submit</button>
+        </form>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    <div class="flash-message">{{ messages[-1] }}</div>
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

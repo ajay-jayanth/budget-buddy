@@ -64,6 +64,43 @@ def make_payment():
 def signup():
     return signup_fn()
 
+@app.route('/bank-authorization', methods=['GET'])
+def bank_authorization():
+    return render_template(
+        'bank_authorization.html',
+        bank_name=session['bank_name']
+    )
+
+@app.route('/bank-authorization/captcha-form', methods=['GET', 'POST'])
+def captcha_form():
+    if request.method == 'POST':
+        if request.form['captcha_answer'] == 'WD54J':
+            return redirect(url_for('security_question'))
+        else:
+            flash('Captcha answer is incorrect.')
+            return render_template('captcha_form.html')
+ 
+    return render_template('captcha_form.html')
+
+@app.route('/security-question', methods=['GET', 'POST'])
+def security_question():
+    if request.method == 'GET':
+        questions = [
+            'What was the name of your favorite childhood pet?',
+            'What year was your grandmother born?',
+            'What is your favorite sport?',
+            'What month was your first child born?',
+            'What is your skin color?'
+        ]
+        return render_template(
+            'security_question.html',
+            questions=questions
+        )
+    else:
+        # Redirect to login page after successful signup
+        flash("Account created successfully! Please log in.")
+        return redirect(url_for('login'))
+
 @app.route('/schedule-payments-screen', methods=['GET'])
 def schedule_payments_screen():
     return render_template('schedule_payments_screen.html')
