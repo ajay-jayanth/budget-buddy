@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='homepage.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='taskbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bank_auth.css') }}">
+    <title>Bank Authorization</title>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Bank Authorization</h1>
+        <div class="bank-header">
+            {% if bank_name == "Wells Fargo" %}
+                <img src="{{ url_for('static', filename='icons/wells-fargo.png') }}" class="bank-icon" alt="Wells Fargo Icon">
+            {% elif bank_name == "Chase" %}
+                <img src="{{ url_for('static', filename='icons/chase.png') }}" class="bank-icon" alt="Chase Icon">
+            {% elif bank_name == "Bank of America" %}
+                <img src="{{ url_for('static', filename='icons/bofa.png') }}" class="bank-icon" alt="Bank of America Icon">
+            {% else %}
+                <img src="{{ url_for('static', filename='icons/default_icon.png') }}" class="bank-icon" alt="Default Icon">
+            {% endif %}
+            <h1>Bank: {{ bank_name }}</h1>
+        </div>
+        <p><strong>Budget Buddy</strong> is asking you to authorize your account associated with <strong>{{ bank_name }}</strong> to attain and update debt information. Click continue to start the authorization process.</p>
+        <a href="{{ url_for('captcha_form') }}"><button type="submit" class="signup-btn">Continue</button></a>
+    </div>
+</body>
+</html>

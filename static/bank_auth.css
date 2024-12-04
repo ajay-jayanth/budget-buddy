@@ -1,0 +1,19 @@
+p {
+    text-align: left;
+}
+
+.signup-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .signup-btn:hover {
+    background-color: #0056b3;
+  }
+  
