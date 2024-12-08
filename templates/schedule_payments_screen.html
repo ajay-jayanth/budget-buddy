@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='taskbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='infobox.css') }}">
     <script src="{{ url_for('static', filename='eventListeners.js') }}"></script>
     <title>Schedule Payment</title>
 </head>
@@ -22,7 +23,15 @@
                 <input type="number" id="yearly_income" name="yearly_income" min="0.0" required>
             </div>
             <div class="form-group">
-                <label for="payment_intervals">Payment Intervals</label>
+                <div class="label-box">
+                    <label for="payment_intervals">Payment Intervals</label>
+                    <div class="info-icon" tabindex="0">
+                        i
+                        <div class="info-box">
+                            This is the length of the interval in days that you will make payments in.
+                        </div>
+                    </div>
+                </div>
                 <input type="number" id="payment_intervals" name="payment_intervals" min="0" max='365' required>
             </div>
             <button type="submit" class="login-btn">Schedule Payment</button>

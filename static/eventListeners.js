@@ -20,3 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const infoIcon = document.querySelector('.info-icon');
+    const infoBox = document.querySelector('.info-box');
+
+    infoIcon.addEventListener('click', () => {
+        infoBox.style.display = infoBox.style.display === 'block' ? 'none' : 'block';
+    });
+});
