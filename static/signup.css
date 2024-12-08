@@ -66,3 +66,16 @@ body {
 .signup-btn:hover {
   background-color: #0056b3;
 }
+
+/* Error Message Styling */
+.error-message {
+  color: red;
+  background-color: #ffe6e6;
+  padding: 10px;
+  border: 1px solid red;
+  border-radius: 5px;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.9em;
+}
+

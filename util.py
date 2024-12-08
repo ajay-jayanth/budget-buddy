@@ -65,23 +65,46 @@ def signup_fn():
 
 def login_fn():
     if request.method == 'POST':
-        df = pd.read_csv('static/user_data.csv').set_index('username')
-        username = request.form['username']
-        password = request.form['password']
+        # Ensure the user data file exists
+        if not os.path.exists(USER_DATA_PATH):
+            flash("User data not found. Please sign up first.")
+            return redirect(url_for('signup'))
 
-        if username in df.index:
-            if df.loc[username, 'password'] == password:
-                session['username'] = username
-                session['bank_name'] = df.loc[username, 'bank_name']
-                session['account_number'] = df.loc[username, 'bank_account_number']
-                session['debt_amount'] = df.loc[username, 'debt_amount']
+        try:
+            # Load user data
+            df = pd.read_csv(USER_DATA_PATH).set_index('username')
+        except Exception as e:
+            flash("Error reading user data. Please contact support.")
+            print(f"Error: {e}")
+            return redirect(url_for('login'))
 
-                return redirect(url_for('homepage'))
-        
+        # Get input from the login form
+        username = request.form['username'].strip()
+        password = request.form['password'].strip()
+
+        # Check for case-insensitive match
+        username_lower = username.lower()
+        matching_users = df.index.str.lower() == username_lower
+        if not matching_users.any():
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+
+        # Get the actual username and verify the password
+        actual_username = df.index[matching_users][0]
+        if df.loc[actual_username, 'password'] == password:
+            # Set session variables
+            session['username'] = actual_username
+            session['bank_name'] = df.loc[actual_username, 'bank_name']
+            session['account_number'] = df.loc[actual_username, 'bank_account_number']
+            session['debt_amount'] = df.loc[actual_username, 'debt_amount']
+
+            return redirect(url_for('homepage'))
+
         flash('Invalid username or password')
         return redirect(url_for('login'))
     else:
         return render_template('login.html')
+
     
 def make_payment_fn():
     if request.method == 'POST':

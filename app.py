@@ -119,11 +119,15 @@ def schedule_payments():
         elif err_str == 'Amount':
             flash('The amount cannot be paid before the goal date.')
             return redirect(url_for('schedule_payments_screen'))
-    
+
     session['payment_amount'] = compute_payment_amount(goal_date, payment_intervals)
     payment_date = datetime.datetime.now() + datetime.timedelta(days=payment_intervals)
     session['payment_date'] = payment_date.strftime('%m-%d-%Y')
+
+    # Add confirmation message
+    flash('Payment schedule created successfully!')
     return redirect(url_for('homepage'))
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='localhost', port=3000, threaded=True)

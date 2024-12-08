@@ -11,6 +11,13 @@
 </head>
 <body>
     <div class="login-container">
+        <!-- Flash Message Section -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-message">{{ messages[-1] }}</div>
+            {% endif %}
+        {% endwith %}
+
         <h1>Hello {{ username }}</h1>
         <div class="bank-header">
             {% if bank_name == "Wells Fargo" %}
