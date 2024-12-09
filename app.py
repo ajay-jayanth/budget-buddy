@@ -108,7 +108,7 @@ def schedule_payments_screen():
 @app.route('/schedule-payments', methods=['POST'])
 def schedule_payments():
     goal_date = datetime.datetime.strptime(request.form['goal_date'], '%Y-%m-%d')
-    yearly_income = int(request.form['yearly_income'])
+    yearly_income = float(request.form['yearly_income'].removeprefix('$').replace(',', ''))
     payment_intervals = int(request.form['payment_intervals'])
 
     config_valid, err_str = check_schedule_config(goal_date, yearly_income, payment_intervals)

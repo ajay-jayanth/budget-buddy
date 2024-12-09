@@ -109,7 +109,8 @@ def login_fn():
 def make_payment_fn():
     if request.method == 'POST':
         df = pd.read_csv('static/user_data.csv').set_index('username')
-        payment_amount = request.form['payment_amount']
+        payment_amount = request.form['payment_amount'].removeprefix('$')
+        payment_amount = payment_amount.replace(',', '')
         payment_amount = float(payment_amount) if type(payment_amount) != float else payment_amount
         username = session.get('username')
 
