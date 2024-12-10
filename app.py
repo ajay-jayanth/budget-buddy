@@ -23,10 +23,14 @@ def login():
 @app.route('/homepage', methods=['GET', 'POST'])
 def homepage():
     debt_amount = session.get("debt_amount", 0)
+
     formatted_debt_amount = f'${debt_amount:,.2f}'  # This is for display purposes only
 
+    
+    session['payment_amount'] = compute_payment_amount(datetime.datetime.strptime(session['goal_date'], '%Y-%m-%d'), session['payment_intervals'])
+    payment_date = datetime.datetime.now() + datetime.timedelta(days=session['payment_intervals'])
+    session['payment_date'] = payment_date.strftime('%m-%d-%Y')
     payment_amount = session.get('payment_amount', 0)
-
     if payment_amount == 0:
         return render_template(
             'homepage.html',
@@ -107,10 +111,12 @@ def schedule_payments_screen():
 
 @app.route('/schedule-payments', methods=['POST'])
 def schedule_payments():
-    goal_date = datetime.datetime.strptime(request.form['goal_date'], '%Y-%m-%d')
+    str_goal_date = request.form['goal_date']
+    goal_date = datetime.datetime.strptime(str_goal_date, '%Y-%m-%d')
     yearly_income = float(request.form['yearly_income'].removeprefix('$').replace(',', ''))
     payment_intervals = int(request.form['payment_intervals'])
-
+    session['goal_date'] = str_goal_date
+    session['payment_intervals'] = payment_intervals
     config_valid, err_str = check_schedule_config(goal_date, yearly_income, payment_intervals)
     if not config_valid:
         if err_str == 'Date':
@@ -125,9 +131,19 @@ def schedule_payments():
     session['payment_date'] = payment_date.strftime('%m-%d-%Y')
 
     # Add confirmation message
-    flash('Payment schedule created successfully!')
+    # flash('Payment schedule created successfully!')
     return redirect(url_for('homepage'))
 
+@app.route('/clear-schedule', methods=['GET'])
+def clear_schedule():
+    # Remove payment-related session variables
+    session.pop('payment_amount', None)
+    session.pop('payment_date', None)
+    
+    # Add a flash message to confirm schedule has been cleared
+    flash('Payment schedule has been cleared.')
+
+    return redirect(url_for('homepage'))
 
 if __name__ == '__main__':
     app.run(debug=True, host='localhost', port=3000, threaded=True)
