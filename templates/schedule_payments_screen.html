@@ -42,6 +42,9 @@
                 {% endif %}
             {% endwith %}
         </form>
+        {% if session.get('payment_amount') %}
+            <a href="{{ url_for('clear_schedule') }}" class="clear-schedule-btn">Clear Payment Schedule</a>
+        {% endif %}
     </div>
     <div class="taskbar">
         <div class="button-holder">
