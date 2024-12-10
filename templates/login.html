@@ -22,19 +22,17 @@
         </form>
         
         <!-- Signup link below the login button -->
-        <p class="signup-link"><a href="{{ url_for('signup') }}">Don't have an account? Sign up here</a></p>
+        <p class="signup-link">
+            <a href="{{ url_for('signup') }}">Don't have an account? Sign up here</a>
+        </p>
         
         {% with messages = get_flashed_messages() %}
             {% if messages %}
-                {% if messages[-1] == "Account created successfully! Please log in." %}
-                    <div class="flash-messages">
-                        <div class="flash-message.green">{{ messages[-1] }}</div>
-                    </div>
-                {% else %}
-                    <div class="flash-messages">
-                        <div class="flash-message">{{ messages[-1] }}</div>
-                    </div>
-                {% endif %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div class="error-message">{{ message }}</div>
+                    {% endfor %}
+                </div>
             {% endif %}
         {% endwith %}
     </div>

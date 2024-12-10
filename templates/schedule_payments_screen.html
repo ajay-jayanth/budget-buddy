@@ -32,13 +32,21 @@
                         </div>
                     </div>
                 </div>
-                <input type="number" id="payment_intervals" name="payment_intervals" min="0" max='365' required>
+                <input type="number" id="payment_intervals" name="payment_intervals" min="0" max="365" required>
             </div>
             <button type="submit" class="login-btn">Schedule Payment</button>
             
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
-                    <div class="error-message">{{ messages[-1] }}</div>
+                    <div class="flash-messages">
+                        {% for message in messages %}
+                            {% if "successfully" in message %}
+                                <div class="success-message">{{ message }}</div>
+                            {% else %}
+                                <div class="error-message">{{ message }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 {% endif %}
             {% endwith %}
         </form>
