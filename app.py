@@ -26,21 +26,11 @@ def homepage():
 
     formatted_debt_amount = f'${debt_amount:,.2f}'  # This is for display purposes only
 
-    
-    session['payment_amount'] = compute_payment_amount(datetime.datetime.strptime(session['goal_date'], '%Y-%m-%d'), session['payment_intervals'])
-    payment_date = datetime.datetime.now() + datetime.timedelta(days=session['payment_intervals'])
-    session['payment_date'] = payment_date.strftime('%m-%d-%Y')
-    payment_amount = session.get('payment_amount', 0)
-    if payment_amount == 0:
-        return render_template(
-            'homepage.html',
-            username=session.get('username'),
-            bank_name=session.get('bank_name'),
-            account_number=session.get('account_number'),
-            debt_amount=debt_amount,  # Raw number for JavaScript
-            formatted_debt_amount=formatted_debt_amount  # Formatted string for display
-        )
-    else:
+    if('goal_date' in session):
+        session['payment_amount'] = compute_payment_amount(datetime.datetime.strptime(session['goal_date'], '%Y-%m-%d'), session['payment_intervals'])
+        payment_date = datetime.datetime.now() + datetime.timedelta(days=session['payment_intervals'])
+        session['payment_date'] = payment_date.strftime('%m-%d-%Y')
+        payment_amount = session.get('payment_amount', 0)
         return render_template(
             'homepage_SP.html',
             username=session.get('username'),
@@ -51,6 +41,16 @@ def homepage():
             payment_amount=f'${payment_amount:,.2f}',
             payment_date=session.get('payment_date')
         )
+    else:
+        return render_template(
+            'homepage.html',
+            username=session.get('username'),
+            bank_name=session.get('bank_name'),
+            account_number=session.get('account_number'),
+            debt_amount=debt_amount,  # Raw number for JavaScript
+            formatted_debt_amount=formatted_debt_amount  # Formatted string for display
+        )
+        
 
 @app.route('/payment-screen', methods=['GET'])
 def payment_screen():
