@@ -40,8 +40,15 @@ body, html {
     color: #666;
 }
 
-.form-group input, .form-group select {
+.form-group input {
+    width: 94%;
+}
+
+.form-group select {
     width: 100%;
+}
+
+.form-group input, .form-group select {
     padding: 0.75rem;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -174,13 +181,13 @@ body, html {
     color: #666;
 }
 
-.form-group input {
+/* .form-group input {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
-}
+} */
 
 .form-group input:focus {
     border-color: #0056b3;

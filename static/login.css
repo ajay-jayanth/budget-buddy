@@ -7,6 +7,8 @@ body, html {
     width: 100vw;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    overflow: hidden;
+
 }
 
 /* Form container */
@@ -67,67 +69,65 @@ body, html {
     background-color: #0056b3;
 }
 
-.signup-link {
-    margin-top: 1rem;
-    display: block;
-    color: #007bff;
-    text-decoration: none;
+/* Info box styles */
+.label-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
 }
 
-.signup-link:hover {
-    text-decoration: underline;
-}
-
-/* login.css */
-.signup-link {
-    margin-top: 10px;
+.info-icon {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    background-color: #007bff;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
     text-align: center;
-    font-size: 0.9em;
-}
-.signup-link a {
-    color: #007bff;
-    text-decoration: none;
-}
-.signup-link a:hover {
-    text-decoration: underline;
+    line-height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
-/* Error Message Styling */
-.error-message {
+.info-box {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    color: #333;
     padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 200px;
+}
+
+/* Success Message Styling */
+.success-message {
+    color: green;
+    background-color: #e6ffe6;
+    padding: 10px;
+    border: 1px solid green;
     border-radius: 5px;
     margin-top: 10px;
     text-align: center;
     font-size: 0.9em;
 }
 
-.error-message:not(.green) {
+/* Error Message Styling */
+.error-message {
     color: red;
     background-color: #ffe6e6;
+    padding: 10px;
     border: 1px solid red;
-}
-
-.flash-message.green {
-    color: green;
-    background-color: #e6ffe6;
-    border: 1px solid green;
-}
-
-.signup-link {
-    display: inline-block; 
-    padding: 10px; 
+    border-radius: 5px;
+    margin-top: 10px;
     text-align: center;
     font-size: 0.9em;
-    width: 100%; 
 }
-
-.signup-link a {
-    color: #007bff;
-    text-decoration: none;
-    display: block; 
-}
-
-.signup-link a:hover {
-    text-decoration: underline;
-}
-

@@ -3,41 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Buddy - Make Payment</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='taskbar.css') }}">
-    <script src="{{ url_for('static', filename='eventListeners.js') }}"></script>
-    <title>Make Payment</title>
+    <style>
+        .confirmation-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .confirmation-popup {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .confirmation-popup h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .confirmation-popup .popup-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+
+        .confirmation-popup .popup-btn {
+            width: 48%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .confirmation-popup .popup-btn-confirm {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .confirmation-popup .popup-btn-confirm:hover {
+            background-color: #0056b3;
+        }
+
+        .confirmation-popup .popup-btn-cancel {
+            background-color: #f4f4f4;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .confirmation-popup .popup-btn-cancel:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
 </head>
 <body>
     <div class="login-container">
-        <h2>Budget Buddy</h2>
-        <h1>Debt: {{ debt_amount_str }}</h1>
-        <form action="{{ url_for('make_payment') }}" method="POST">
-            <div class="form-group">
-                <label for="payment_amount">Payment Amount</label>
-                <input class="money-input" type="text" id="payment_amount" name="payment_amount" placeholder="$0.00" required>
-            </div>
-            <button type="submit" class="login-btn">Make Payment</button>
-        </form>
+        <h2>Make Payment</h2>
+        <h3>Debt: {{ debt_amount_str }}</h3>
         
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="error-message">{{ messages[-1] }}</div>
-            {% endif %}
-        {% endwith %}
+        <form method="POST" action="{{ url_for('make_payment') }}">
+            <div class="form-group">
+                <label for="payment-amount">Payment Amount</label>
+                <input type="text" class="money-input" id="payment-amount" name="payment_amount" placeholder="$0.00" required>
+            </div>
+
+            <button type="button" class="login-btn" onclick="showConfirmationPopup()">Make Payment</button>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="error-message">
+                        {{ messages[-1] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </form>
     </div>
+
+    <!-- Confirmation Popup -->
+    <div class="confirmation-overlay">
+        <div class="confirmation-popup">
+            <h3>Confirm Payment</h3>
+            <p>Are you sure you want to make a payment of <span id="confirm-amount"></span>?</p>
+            <div class="popup-buttons">
+                <button class="popup-btn popup-btn-cancel" onclick="hideConfirmationPopup()">Cancel</button>
+                <button class="popup-btn popup-btn-confirm" onclick="submitPayment()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Taskbar -->
     <div class="taskbar">
         <div class="button-holder">
-            <button class="taskbar-button selected" id="payment-button">
-                <img src="{{ url_for('static', filename='icons/payment_icon.png') }}">
+            <button id="payment-button" class="taskbar-button selected">
+                <img src="{{ url_for('static', filename='icons/payment_icon.png') }}" alt="Payment">
             </button>
-            <button class="taskbar-button" id="home-button">
-                <img src="{{ url_for('static', filename='icons/home_icon.png') }}">
+            <button id="home-button" class="taskbar-button">
+                <img src="{{ url_for('static', filename='icons/home_icon.png') }}" alt="Home">
             </button>
-            <button class="taskbar-button" id="calendar-button">
-                <img src="{{ url_for('static', filename='icons/calendar_icon.png') }}">
+            <button id="calendar-button" class="taskbar-button">
+                <img src="{{ url_for('static', filename='icons/calendar_icon.png') }}" alt="Calendar">
             </button>
         </div>
     </div>
+
+    <script>
+        function showConfirmationPopup() {
+            const paymentAmountInput = document.getElementById('payment-amount');
+            const confirmAmountSpan = document.getElementById('confirm-amount');
+            const confirmationOverlay = document.querySelector('.confirmation-overlay');
+
+            const paymentAmount = paymentAmountInput.value;
+
+            if (paymentAmount === '$' || paymentAmount === '$0.00') {
+                alert('Please enter a valid payment amount');
+                return;
+            }
+
+            confirmAmountSpan.textContent = paymentAmount;
+            confirmationOverlay.style.display = 'flex';
+        }
+
+        function hideConfirmationPopup() {
+            const confirmationOverlay = document.querySelector('.confirmation-overlay');
+            confirmationOverlay.style.display = 'none';
+        }
+
+        function submitPayment() {
+            document.querySelector('form').submit();
+        }
+
+        document.querySelector('.confirmation-overlay').addEventListener('click', (event) => {
+            if (event.target === event.currentTarget) {
+                hideConfirmationPopup();
+            }
+        });
+    </script>
+    <script src="{{ url_for('static', filename='eventListeners.js') }}"></script>
 </body>
 </html>

@@ -3,6 +3,8 @@ import pandas as pd
 import os
 import datetime
 from typing import Tuple
+import pytz
+
 
 USER_DATA_PATH = 'static/user_data.csv'
 BANK_DATA_PATH = 'static/bank_data.csv'
@@ -107,7 +109,8 @@ def login_fn():
 
     
 def make_payment_fn():
-    if request.method == 'POST':
+    # print("tzinfo:",session['goal_date'].tzinfo, session['goal_date'])
+    if request.method == 'POST' and request.form['payment_amount'].removeprefix('$').replace(',', '')!='':
         df = pd.read_csv('static/user_data.csv').set_index('username')
         payment_amount = request.form['payment_amount'].removeprefix('$')
         payment_amount = payment_amount.replace(',', '')
@@ -135,5 +138,5 @@ def check_schedule_config(goal_date: datetime.date, yearly_income: int, payment_
 
 def compute_payment_amount(goal_date: datetime.date, payment_intervals: int) -> float:
     days_for_repayment = (goal_date - datetime.datetime.now()).days
-    payment_per_day = session.get('debt_amount') / days_for_repayment
+    payment_per_day = session.get('debt_amount',0) / days_for_repayment
     return payment_per_day * payment_intervals
