@@ -11,8 +11,8 @@
 </head>
 <body>
     <div class="login-container">
-        <h2>Budget Buddy</h2>
         <h1>Schedule Payments</h1>
+        <h2>Total Debt: {{debt_amount}}</h2>
         <form action="{{ url_for('schedule_payments') }}" method="POST">
             <div class="form-group">
                 <label for="goal_date">Goal Date</label>

@@ -107,7 +107,7 @@ def security_question():
 
 @app.route('/schedule-payments-screen', methods=['GET'])
 def schedule_payments_screen():
-    return render_template('schedule_payments_screen.html')
+    return render_template('schedule_payments_screen.html', debt_amount=f'${session.get("debt_amount"):,.2f}')
 
 @app.route('/schedule-payments', methods=['POST'])
 def schedule_payments():
@@ -144,6 +144,11 @@ def clear_schedule():
     flash('Payment schedule has been cleared.')
 
     return redirect(url_for('homepage'))
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.clear()
+    return redirect(url_for('index_function'))
 
 if __name__ == '__main__':
     app.run(debug=True, host='localhost', port=3000, threaded=True)
