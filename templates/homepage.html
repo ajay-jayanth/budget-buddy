@@ -10,34 +10,87 @@
     <title>Homepage</title>
 </head>
 <body>
-    <div class="login-container">
+    <div class="main-container">
         <!-- Flash Message Section -->
         {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="flash-message">{{ messages[-1] }}</div>
-            {% endif %}
-        {% endwith %}
+        {% if messages %}
+            <div class="flash-message">{{ messages[-1] }}</div>
+        {% endif %}
+       {% endwith %}
 
-        <h1>Hello {{ username }}</h1>
-        <div class="bank-header">
-            {% if bank_name == "Wells Fargo" %}
-                <img src="{{ url_for('static', filename='icons/wells-fargo.png') }}" class="bank-icon" alt="Wells Fargo Icon">
-            {% elif bank_name == "Chase" %}
-                <img src="{{ url_for('static', filename='icons/chase.png') }}" class="bank-icon" alt="Chase Icon">
-            {% elif bank_name == "Bank of America" %}
-                <img src="{{ url_for('static', filename='icons/bofa.png') }}" class="bank-icon" alt="Bank of America Icon">
-            {% else %}
-                <img src="{{ url_for('static', filename='icons/default_icon.png') }}" class="bank-icon" alt="Default Icon">
-            {% endif %}
-            <h1>Bank: {{ bank_name }}</h1>
+        <!-- Header Container -->
+        <div class="header-container">
+            <div class="top-bar">
+                <div class="logout-container">
+                    <form action="{{ url_for('logout') }}" method="POST">
+                        <button type="submit" class="logout-button">Logout</button>
+                    </form>
+                </div>                  
+            </div>
+            <h1>Hello {{ username }}</h1>
+            <div class="bank-info">
+                <div class="bank-header">
+                    {% if bank_name == "Wells Fargo" %}
+                        <img src="{{ url_for('static', filename='icons/wells-fargo.png') }}" class="bank-icon" alt="Wells Fargo Icon">
+                    {% elif bank_name == "Chase" %}
+                        <img src="{{ url_for('static', filename='icons/chase.png') }}" class="bank-icon" alt="Chase Icon">
+                    {% elif bank_name == "Bank of America" %}
+                        <img src="{{ url_for('static', filename='icons/bofa.png') }}" class="bank-icon" alt="Bank of America Icon">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='icons/default_icon.png') }}" class="bank-icon" alt="Default Icon">
+                    {% endif %}
+                    <h2>Bank: {{ bank_name }}</h2>
+                </div>
+                <h1>Account Number: {{ account_number }}</h1>
+                <h1>Total Debt: {{ formatted_debt_amount }}</h1>
+            </div>
         </div>
-
-        <h3>Account Number: {{ account_number }}</h3>
-        <h2>Total Debt: {{ formatted_debt_amount }}</h2>
-
-        <canvas id="debtChart" width="250" height="250"></canvas>
+    
+        <!-- Main Content Area -->
+        <div class="container-wrapper">
+            <div class="content-container">
+                <!-- Left Side - Chart -->
+                <div class="chart-container">
+                    <canvas id="debtChart"></canvas>
+                </div>
+                
+                <!-- Right Side - Table -->
+                <div class="table-container">
+                    <table class="spending-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Rent</td>
+                                <td>${{ "{:,.2f}".format(debt_amount * 0.40) }}</td>
+                            </tr>
+                            <tr>
+                                <td>Medical Bills</td>
+                                <td>${{ "{:,.2f}".format(debt_amount * 0.30) }}</td>
+                            </tr>
+                            <tr>
+                                <td>Groceries</td>
+                                <td>${{ "{:,.2f}".format(debt_amount * 0.20) }}</td>
+                            </tr>
+                            <tr>
+                                <td>Insurance</td>
+                                <td>${{ "{:,.2f}".format(debt_amount * 0.10) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        
+            <div class="schedule-container">
+                <p>No payment schedule set</p>
+            </div>
+        </div>
     </div>
-
+    <!-- Taskbar -->
     <div class="taskbar">
         <div class="button-holder">
             <button class="taskbar-button" id="payment-button">
@@ -51,7 +104,6 @@
             </button>
         </div>
     </div>
-
     <script>
         const totalDebt = {{ debt_amount | default(10000) }};
 
@@ -79,19 +131,29 @@
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         position: 'top',
+                        padding: 5
                     },
                     tooltip: {
                         callbacks: {
-                            label: function (tooltipItem) {
-                                return `${tooltipItem.label}: $${tooltipItem.raw.toFixed(2)}`;
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                const value = context.parsed;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((value / total) * 100).toFixed(2);
+                                label += `$${value.toFixed(2)} (${percentage}%)`;
+                                return label;
                             }
                         }
                     }
                 }
-            }
+            }  
         });
     </script>
 </body>

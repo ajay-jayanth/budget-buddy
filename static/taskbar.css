@@ -1,36 +1,41 @@
 .taskbar {
     display: flex;
     background-color: black;
-    width: 100%;
-    height: 8%;
+    width: 100%; /* Changed from 100vw */
+    height: 8vh;
     position: fixed;
     bottom: 0;
+    left: 0;
     justify-content: center;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
+
 
 .button-holder {
     display: flex;
-    width: 30%;
+    width: min(30%, 400px); /* Responsive width with maximum */
     justify-content: space-between;
+    align-items: center;
 }
 
 .taskbar-button {
     display: flex;
-    height: 100%;
+    height: 80%; /* Slightly reduced to prevent overflow */
     aspect-ratio: 1;
-
     background-color: transparent;
     border: none;
     cursor: pointer;
-
     align-items: center;
     justify-content: center;
+    margin: 0 5px; /* Add spacing between buttons */
 }
 
 .taskbar-button.selected {
     cursor: default;
-    outline: solid white;
-    outline-offset: -4px;
+    outline: 2px solid white; /* More precise outline */
+    outline-offset: -2px;
 }
 
 .taskbar-button:not(.selected):hover {
@@ -43,11 +48,22 @@
 
 .taskbar-button img {
     display: flex;
-    object-fit: cover;
+    object-fit: contain; /* Changed to contain to prevent image distortion */
+    max-height: 100%;
+    width: auto;
 }
 
 .flash-message {
     display: flex;
-    margin-top: 5%;
-    justify-self: center;
+    margin-bottom: 8%; /* Changed to margin-bottom to avoid taskbar overlap */
+    justify-content: center;
+    width: 100%;
+}
+
+/* Add to ensure proper spacing for content above taskbar */
+body {
+    margin-bottom: 8vh; /* Match taskbar height */
+    min-height: 100vh;
+    position: relative;
+    
 }
